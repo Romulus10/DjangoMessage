@@ -10,7 +10,7 @@
                 From: {{ message.sender }}
             </div>
             <div>
-                <button id="reply_button" class="btn btn-primary">Reply</button>
+                <button class="btn btn-primary" id="reply_button">Reply</button>
                 <a class="btn btn-primary" href="{% url 'clinic_messages:delete_message' id=message.id %}">Delete</a>
             </div>
         </div>
@@ -29,13 +29,13 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Reply</h5>
-                <button id="close" aria-label="Close" class="close" data-dismiss="modal" type="button">
+                <button aria-label="Close" class="close" data-dismiss="modal" id="close" type="button">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form method="POST"
-                    action="{% url 'clinic_messages:reply_message' message_id=message.id sender_id=sender.id %}">
+                <form action="{% url 'clinic_messages:reply_message' message_id=message.id sender_id=sender.id %}"
+                      method="POST">
                     {% crispy form %}
                 </form>
             </div>
@@ -62,5 +62,6 @@
             modal.style.display = "none";
         }
     }
+
 </script>
 {% endblock %}

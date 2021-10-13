@@ -1,18 +1,20 @@
 import os
-from clinic_messages.form import MessageForm
-from django.shortcuts import get_object_or_404, redirect, render
-from django.core.mail import send_mail
-
-from clinic_messages.models import Message
 
 from django.contrib.auth import get_user_model
+from django.core.mail import send_mail
+from django.shortcuts import get_object_or_404, redirect, render
+
+from clinic_messages.form import MessageForm
+from clinic_messages.models import Message
+
 User = get_user_model()
 
 
 def index(request):
     if request.user.is_authenticated:
         return render(request, 'messages/list/list.html', {
-            'list_view': Message.objects.filter(recipient=request.user).filter(deleted_by_recipient=False).order_by('-timestamp')
+            'list_view': Message.objects.filter(recipient=request.user).filter(deleted_by_recipient=False).order_by(
+                '-timestamp')
         })
     else:
         return redirect('main:not_logged_in')
@@ -21,7 +23,8 @@ def index(request):
 def sent_box(request):
     if request.user.is_authenticated:
         return render(request, 'messages/list/sent_list.html', {
-            'list_view': Message.objects.filter(sender=request.user).filter(deleted_by_sender=False).order_by('-timestamp')
+            'list_view': Message.objects.filter(sender=request.user).filter(deleted_by_sender=False).order_by(
+                '-timestamp')
         })
     else:
         return redirect('main:not_logged_in')
@@ -39,7 +42,8 @@ def new_message(request, sender_id=None):
                 message.save()
                 send_mail(
                     "Message from {0}".format(message.sender),
-                    "{0}\n\n\nTHIS IS AN AUTOMATED MESSAGE. PLEASE DO NOT REPLY TO THIS EMAIL. PLEASE LOG IN TO REPLY.".format(message.content),
+                    "{0}\n\n\nTHIS IS AN AUTOMATED MESSAGE. PLEASE DO NOT REPLY TO THIS EMAIL. PLEASE LOG IN TO REPLY.".format(
+                        message.content),
                     os.environ.get('DEFAULT_FROM_EMAIL'),
                     [message.recipient.email])
             return redirect('clinic_messages:index')
@@ -92,7 +96,7 @@ def reply_message(request, message_id=None, sender_id=None):
         return redirect('main:not_logged_in')
 
 
-def view_message(request, message_id=None, sender_id=None):
+def view_message(request, message_id=None):
     if request.user.is_authenticated:
         if request.method == "POST":
             form = MessageForm(request.POST)
