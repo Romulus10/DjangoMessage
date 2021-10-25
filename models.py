@@ -23,8 +23,5 @@ class Message(models.Model):
     timestamp = models.DateTimeField(
         auto_now=True, editable=False, null=False, blank=False)
 
-    def __unicode__(self):
-        return self.subject
-
     def __str__(self):
         return self.subject
