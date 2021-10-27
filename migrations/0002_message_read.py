@@ -5,13 +5,13 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ('clinic_messages', '0001_initial'),
+        ("clinic_messages", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='message',
-            name='read',
+            model_name="message",
+            name="read",
             field=models.BooleanField(default=False),
             preserve_default=False,
         ),

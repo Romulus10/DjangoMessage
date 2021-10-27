@@ -5,18 +5,18 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ('clinic_messages', '0003_alter_message_read'),
+        ("clinic_messages", "0003_alter_message_read"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='message',
-            name='deleted_by_recipient',
+            model_name="message",
+            name="deleted_by_recipient",
             field=models.BooleanField(default=False, editable=False),
         ),
         migrations.AddField(
-            model_name='message',
-            name='deleted_by_sender',
+            model_name="message",
+            name="deleted_by_sender",
             field=models.BooleanField(default=False, editable=False),
         ),
     ]

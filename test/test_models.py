@@ -4,7 +4,7 @@ from clinic_messages.models import Message, User
 
 
 def test_message():
-    m = baker.make('clinic_messages.Message')
+    m = baker.make("clinic_messages.Message")
     assert str(m) == m.subject
 
 
