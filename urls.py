@@ -11,6 +11,7 @@ from clinic_messages.views import (
     view_message,
 )
 
+# pylint: disable=C0103
 app_name = "clinic_messages"
 
 urlpatterns = [
