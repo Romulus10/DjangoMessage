@@ -132,9 +132,9 @@ def view_message(request, message_id=None):
     return return_response
 
 
-def delete_message(request, id=None):
+def delete_message(request, message_id=None):
     if request.user.is_authenticated:
-        message = get_object_or_404(Message, pk=id)
+        message = get_object_or_404(Message, pk=message_id)
         message.deleted_by_recipient = True
         message.save()
         return_response = redirect("clinic_messages:index")
@@ -143,9 +143,9 @@ def delete_message(request, id=None):
     return return_response
 
 
-def delete_sent_message(request, id=None):
+def delete_sent_message(request, message_id=None):
     if request.user.is_authenticated:
-        message = get_object_or_404(Message, pk=id)
+        message = get_object_or_404(Message, pk=message_id)
         message.deleted_by_sender = True
         message.save()
         return_response = redirect("clinic_messages:sent_box")
