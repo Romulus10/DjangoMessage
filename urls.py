@@ -25,8 +25,8 @@ urlpatterns = [
         name="reply_message",
     ),
     path(r"view_message/<int:message_id>", view_message, name="view_message"),
-    path(r"delete_message/<int:id>", delete_message, name="delete_message"),
+    path(r"delete_message/<int:message_id>", delete_message, name="delete_message"),
     path(
-        r"delete_sent_message/<int:id>", delete_sent_message, name="delete_sent_message"
+        r"delete_sent_message/<int:message_id>", delete_sent_message, name="delete_sent_message"
     ),
 ]
