@@ -11,7 +11,7 @@
             </div>
             <div>
                 <button class="btn btn-primary" id="reply_button">Reply</button>
-                <a class="btn btn-primary" href="{% url 'clinic_messages:delete_message' id=message.id %}">Delete</a>
+                <a class="btn btn-primary" href="{% url 'clinic_messages:delete_message' message_id=message.id %}">Delete</a>
             </div>
         </div>
         <hr/>
