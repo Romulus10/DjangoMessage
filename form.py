@@ -1,3 +1,4 @@
+from django.forms.widgets import Textarea
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from django.forms.models import ModelForm
@@ -13,3 +14,6 @@ class MessageForm(ModelForm):
     class Meta:
         model = Message
         fields = "__all__"
+        widgets = {
+            "content": Textarea(attrs={"rows": 4, "cols": 40}),
+        }
