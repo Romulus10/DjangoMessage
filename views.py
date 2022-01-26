@@ -94,6 +94,7 @@ def reply_message(request, message_id=None, sender_id=None):
             sender = User.objects.get(pk=sender_id)
             form = MessageForm()
             form.initial["recipient"] = sender.pk
+            form.initial["subject"] = "RE: " + str(message.subject)
             form.initial["replied_to"] = message
             form.fields["recipient"].queryset = User.objects.filter(is_active=True)
             return_response = render(
