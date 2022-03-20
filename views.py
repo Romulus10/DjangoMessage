@@ -58,7 +58,7 @@ def new_message(request, sender_id=None):
                     os.environ.get("DEFAULT_FROM_EMAIL"),
                     [message.recipient.email],
                 )
-            return_response = redirect("clinic_messages:index")
+            return_response = render(request, "messages/message/success.html")
         else:
             form = MessageForm()
             if sender_id is not None:
@@ -86,7 +86,7 @@ def reply_message(request, message_id=None, sender_id=None):
                     os.environ.get("DEFAULT_FROM_EMAIL"),
                     [message.recipient.email],
                 )
-            return_response = redirect("clinic_messages:index")
+            return_response = render(request, "messages/message/success.html")
         else:
             message = Message.objects.get(pk=message_id)
             message.read = True
