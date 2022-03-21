@@ -97,6 +97,7 @@ def reply_message(request, message_id=None, sender_id=None):
                 return_response = render(
                     request, "messages/message/success.html")
             else:
+                sender = User.objects.get(pk=sender_id)
                 return_response = render(
                     request,
                     "messages/message/read.html",
