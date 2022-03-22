@@ -46,8 +46,7 @@ def new_message(request, sender_id=None):
     if request.user.is_authenticated:
         if request.method == "POST":
             form = MessageForm(request.POST)
-            form.fields["recipient"].queryset = User.objects.filter(
-                is_active=True)
+            form.fields["recipient"].queryset = User.objects.filter(is_active=True)
             if form.is_valid():
                 message = form.save()
                 message.sender = request.user
@@ -59,19 +58,19 @@ def new_message(request, sender_id=None):
                     os.environ.get("DEFAULT_FROM_EMAIL"),
                     [message.recipient.email],
                 )
-                return_response = render(
-                    request, "messages/message/success.html")
+                return_response = render(request, "messages/message/success.html")
             else:
                 return_response = render(
-                    request, "messages/message/new.html", {"form": form})
+                    request, "messages/message/new.html", {"form": form}
+                )
         else:
             form = MessageForm()
             if sender_id is not None:
                 form.initial["recipient"] = User.objects.get(pk=sender_id)
-            form.fields["recipient"].queryset = User.objects.filter(
-                is_active=True)
+            form.fields["recipient"].queryset = User.objects.filter(is_active=True)
             return_response = render(
-                request, "messages/message/new.html", {"form": form})
+                request, "messages/message/new.html", {"form": form}
+            )
     else:
         return_response = redirect("main:not_logged_in")
     return return_response
@@ -81,8 +80,7 @@ def reply_message(request, message_id=None, sender_id=None):
     if request.user.is_authenticated:
         if request.method == "POST":
             form = MessageForm(request.POST)
-            form.fields["recipient"].queryset = User.objects.filter(
-                is_active=True)
+            form.fields["recipient"].queryset = User.objects.filter(is_active=True)
             if form.is_valid():
                 message = form.save()
                 message.sender = request.user
@@ -94,8 +92,7 @@ def reply_message(request, message_id=None, sender_id=None):
                     os.environ.get("DEFAULT_FROM_EMAIL"),
                     [message.recipient.email],
                 )
-                return_response = render(
-                    request, "messages/message/success.html")
+                return_response = render(request, "messages/message/success.html")
             else:
                 sender = User.objects.get(pk=sender_id)
                 return_response = render(
@@ -112,8 +109,7 @@ def reply_message(request, message_id=None, sender_id=None):
             form.initial["recipient"] = sender.pk
             form.initial["subject"] = "RE: " + str(message.subject)
             form.initial["replied_to"] = message
-            form.fields["recipient"].queryset = User.objects.filter(
-                is_active=True)
+            form.fields["recipient"].queryset = User.objects.filter(is_active=True)
             return_response = render(
                 request,
                 "messages/message/read.html",
@@ -128,8 +124,7 @@ def view_message(request, message_id=None):
     if request.user.is_authenticated:
         if request.method == "POST":
             form = MessageForm(request.POST)
-            form.fields["recipient"].queryset = User.objects.filter(
-                is_active=True)
+            form.fields["recipient"].queryset = User.objects.filter(is_active=True)
             if form.is_valid():
                 message = form.save()
                 message.sender = request.user
@@ -140,8 +135,7 @@ def view_message(request, message_id=None):
             form = MessageForm()
             form.initial["recipient"] = message.recipient
             form.initial["replied_to"] = message
-            form.fields["recipient"].queryset = User.objects.filter(
-                is_active=True)
+            form.fields["recipient"].queryset = User.objects.filter(is_active=True)
             return_response = render(
                 request,
                 "messages/message/sent.html",
