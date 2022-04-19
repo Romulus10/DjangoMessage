@@ -3,6 +3,7 @@ import os
 from django.contrib.auth import get_user_model
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect, render
+from django.core.paginator import Paginator
 
 from clinic_messages.form import MessageForm
 from clinic_messages.models import Message
@@ -12,13 +13,15 @@ User = get_user_model()
 
 def index(request):
     if request.user.is_authenticated:
+        data = Message.objects.filter(recipient=request.user).filter(deleted_by_recipient=False).order_by("-timestamp")
+        paginator = Paginator(data, 25)
+        page_number = request.GET.get("page")
+        page_obj = paginator.get_page(page_number)
         return_response = render(
             request,
             "messages/list/list.html",
             {
-                "list_view": Message.objects.filter(recipient=request.user)
-                .filter(deleted_by_recipient=False)
-                .order_by("-timestamp")
+                "list_view": page_obj
             },
         )
     else:
@@ -28,13 +31,15 @@ def index(request):
 
 def sent_box(request):
     if request.user.is_authenticated:
+        data = Message.objects.filter(sender=request.user).filter(deleted_by_sender=False).order_by("-timestamp")
+        paginator = Paginator(data, 25)
+        page_number = request.GET.get("page")
+        page_obj = paginator.get_page(page_number)
         return_response = render(
             request,
             "messages/list/sent_list.html",
             {
-                "list_view": Message.objects.filter(sender=request.user)
-                .filter(deleted_by_sender=False)
-                .order_by("-timestamp")
+                "list_view": page_obj
             },
         )
     else:
