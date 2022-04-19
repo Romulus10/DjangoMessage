@@ -13,16 +13,18 @@ User = get_user_model()
 
 def index(request):
     if request.user.is_authenticated:
-        data = Message.objects.filter(recipient=request.user).filter(deleted_by_recipient=False).order_by("-timestamp")
+        data = (
+            Message.objects.filter(recipient=request.user)
+            .filter(deleted_by_recipient=False)
+            .order_by("-timestamp")
+        )
         paginator = Paginator(data, 25)
         page_number = request.GET.get("page")
         page_obj = paginator.get_page(page_number)
         return_response = render(
             request,
             "messages/list/list.html",
-            {
-                "list_view": page_obj
-            },
+            {"list_view": page_obj},
         )
     else:
         return_response = redirect("main:not_logged_in")
@@ -31,16 +33,18 @@ def index(request):
 
 def sent_box(request):
     if request.user.is_authenticated:
-        data = Message.objects.filter(sender=request.user).filter(deleted_by_sender=False).order_by("-timestamp")
+        data = (
+            Message.objects.filter(sender=request.user)
+            .filter(deleted_by_sender=False)
+            .order_by("-timestamp")
+        )
         paginator = Paginator(data, 25)
         page_number = request.GET.get("page")
         page_obj = paginator.get_page(page_number)
         return_response = render(
             request,
             "messages/list/sent_list.html",
-            {
-                "list_view": page_obj
-            },
+            {"list_view": page_obj},
         )
     else:
         return_response = redirect("main:not_logged_in")
