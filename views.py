@@ -18,7 +18,7 @@ def index(request):
             .filter(deleted_by_recipient=False)
             .order_by("-timestamp")
         )
-        paginator = Paginator(data, 25)
+        paginator = Paginator(data, 10)
         page_number = request.GET.get("page")
         page_obj = paginator.get_page(page_number)
         return_response = render(
@@ -38,7 +38,7 @@ def sent_box(request):
             .filter(deleted_by_sender=False)
             .order_by("-timestamp")
         )
-        paginator = Paginator(data, 25)
+        paginator = Paginator(data, 10)
         page_number = request.GET.get("page")
         page_obj = paginator.get_page(page_number)
         return_response = render(
